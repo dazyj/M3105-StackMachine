@@ -177,6 +177,36 @@ public class CPU
 			// TODO something is missing here...
 		}		
 	}
+	
+	public void wireToExpStack(Stack expstack)
+	{
+
+	}
+	
+	public void wireToCallStack(Stack expstack)
+	{
+
+	}
+	
+	public void wireToIoSubsystem(IO ioSystem)
+	{
+
+	}
+	
+	public void wireToProgramMemory(Memory programMemory)
+	{
+
+	}
+
+	public void clearStacks() 
+	{
+		// TODO Auto-generated method stub
+	}
+
+	public void setPC(int address) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	// TODO something is missing here...
 }
