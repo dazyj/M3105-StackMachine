@@ -1,7 +1,7 @@
 format 76
 "Stack Machine"
-  revision 1
-  modified_by 2 ""
+  revision 2
+  modified_by 2 "Jérémie"
 
 
   
@@ -174,6 +174,27 @@ ${members}}
 	
 	
       end
+
+      classrelation 136706 // <association>
+	relation 135938 ----
+	  a role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 136706 // <association>
+	  b role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 136834 // <association>
+      end
+
+      classrelation 136962 // ioSystem (<unidirectional association>)
+	relation 136066 --->
+	  a role_name "ioSystem" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 136962 // ioSystem (<unidirectional association>)
+	  b parent class_ref 128130 // IO
+      end
     end
 
     class 128130 "IO"
@@ -285,6 +306,10 @@ ${members}}
 
       classrelation 128898 // <aggregation>
 	relation_ref 128514 // <aggregation>
+      end
+
+      classrelation 136834 // <association>
+	relation_ref 135938 // <association>
       end
     end
 
