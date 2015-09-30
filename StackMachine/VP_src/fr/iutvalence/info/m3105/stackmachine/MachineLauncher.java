@@ -29,23 +29,23 @@ public class MachineLauncher
 		Instruction[] instructions = 
 				new Instruction[] 
 				{
-						new Instruction(CPU.IN, null),
-						new Instruction(CPU.CALL, new int[] {0x5}),
-						new Instruction(CPU.OUT, null),
-						new Instruction(CPU.HALT, null),
-						new Instruction(CPU.DUP, null),
-						new Instruction(CPU.JZ, new int[] {0xb}),
-						new Instruction(CPU.CALL, new int[] {0xf}),
-						new Instruction(CPU.RET, null),
-						new Instruction(CPU.POP, null),
-						new Instruction(CPU.PUSH, new int[] {0x1}),
-						new Instruction(CPU.RET, null),
-						new Instruction(CPU.DUP, null),
-						new Instruction(CPU.PUSH, new int[] {0x1}),
-						new Instruction(CPU.SUB, null),
-						new Instruction(CPU.CALL, new int[] {0x5}),
-						new Instruction(CPU.MUL, null),
-						new Instruction(CPU.RET, null)
+						new Instruction(MyCPU.IN, null),
+						new Instruction(MyCPU.CALL, new int[] {0x5}),
+						new Instruction(MyCPU.OUT, null),
+						new Instruction(MyCPU.HALT, null),
+						new Instruction(MyCPU.DUP, null),
+						new Instruction(MyCPU.JZ, new int[] {0xb}),
+						new Instruction(MyCPU.CALL, new int[] {0xf}),
+						new Instruction(MyCPU.RET, null),
+						new Instruction(MyCPU.POP, null),
+						new Instruction(MyCPU.PUSH, new int[] {0x1}),
+						new Instruction(MyCPU.RET, null),
+						new Instruction(MyCPU.DUP, null),
+						new Instruction(MyCPU.PUSH, new int[] {0x1}),
+						new Instruction(MyCPU.SUB, null),
+						new Instruction(MyCPU.CALL, new int[] {0x5}),
+						new Instruction(MyCPU.MUL, null),
+						new Instruction(MyCPU.RET, null)
 				};
 		Program program = new Program(instructions);
 		
@@ -65,7 +65,7 @@ public class MachineLauncher
 		}
 		
 		IO ioSystem = new IO(System.in, System.out, System.err);
-		CPU cpu = new CPU();		
+		CPU cpu = new MyCPU();		
 		Machine machine = new Machine(cpu, programMemory, expStack, callStack, ioSystem );
 		try
 		{
