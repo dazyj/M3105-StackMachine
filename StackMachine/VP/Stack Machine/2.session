@@ -1,18 +1,21 @@
-window_sizes 1280 962 300 900 682 82
+window_sizes 1536 801 300 900 682 82
 diagrams
   active  classdiagram_ref 128002 // Stack_machine_class
-    1614 861 100 4 0 0
+    1230 645 100 4 0 0
 end
 show_stereotypes
+selected operation_ref 145922 // getInstructionAt
 open
-  class_ref 128002 // MyCPU1
-  class_ref 128130 // IO
+  class_ref 128002 // MyCPU
+  class_ref 128130 // MyIO
   class_ref 128258 // Machine
   class_ref 128386 // MachineLauncher
   class_ref 128514 // Stack
-  class_ref 128642 // Memory
-  class_ref 128770 // Program
+  class_ref 128770 // MyProgram
   class_ref 128898 // Instruction
   class_ref 135682 // CPU
+  class_ref 142210 // IO
+  class_ref 142338 // Memory
+  class_ref 142466 // Program
 end
 end

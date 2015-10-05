@@ -1,7 +1,7 @@
 format 76
 "Stack Machine"
-  revision 3
-  modified_by 2 ""
+  revision 4
+  modified_by 2 "Jérémie"
 
 
   
@@ -59,7 +59,7 @@ format 76
       size A4
     end
 
-    class 128002 "MyCPU1"
+    class 128002 "MyCPU"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -121,13 +121,13 @@ ${members}}
 	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
 	    classrelation_ref 129282 // <unidirectional association>
-	  b parent class_ref 128642 // Memory
+	  b parent class_ref 128642 // MyMemory
       end
 
       operation 129282 "wireToIoSubSystem"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "ioSystem" type class_ref 128130 // IO
+	  param in name "ioSystem" type class_ref 128130 // MyIO
 	
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
   ${body}}
@@ -140,7 +140,7 @@ ${members}}
       operation 129410 "wireToProgramMemory"
 	public explicit_return_type "void"
 	nparams 1
-	  param in name "programMemory" type class_ref 128642 // Memory
+	  param in name "programMemory" type class_ref 128642 // MyMemory
 	
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
   ${body}}
@@ -187,15 +187,6 @@ ${members}}
 	    classrelation_ref 136834 // <association>
       end
 
-      classrelation 136962 // ioSystem (<unidirectional association>)
-	relation 136066 --->
-	  a role_name "ioSystem" private
-	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	    classrelation_ref 136962 // ioSystem (<unidirectional association>)
-	  b parent class_ref 128130 // IO
-      end
-
       classrelation 144386 // callStack (<unidirectional association>)
 	relation 143234 --->
 	  a role_name "callStack" private
@@ -221,9 +212,27 @@ ${members}}
 	    classrelation_ref 144898 // <realization>
 	  b parent class_ref 135682 // CPU
       end
+
+      classrelation 151554 // ioSystem (<unidirectional association>)
+	relation 150274 --->
+	  a role_name "ioSystem" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 151554 // ioSystem (<unidirectional association>)
+	  b parent class_ref 142210 // IO
+      end
+
+      classrelation 151938 // <unidirectional association>
+	relation 150658 --->
+	  a role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 151938 // <unidirectional association>
+	  b parent class_ref 142338 // Memory
+      end
     end
 
-    class 128130 "IO"
+    class 128130 "MyIO"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -302,7 +311,7 @@ ${members}}
       end
 
       operation 128514 "write"
-	public explicit_return_type "voidop"
+	public explicit_return_type "void"
 	nparams 1
 	  param in name "op" explicit_type "int"
 	
@@ -338,7 +347,7 @@ ${members}}
 	relation_ref 135938 // <association>
       end
 
-      operation 137474 "IO"
+      operation 137474 "MyIO"
 	public explicit_return_type ""
 	nparams 3
 	  param in name "inStream" explicit_type "inputStream"
@@ -351,6 +360,14 @@ ${members}}
 	
 	
 	
+      end
+
+      classrelation 151682 // <realization>
+	relation 150402 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 151682 // <realization>
+	  b parent class_ref 142210 // IO
       end
     end
 
@@ -416,18 +433,6 @@ ${members}}
 	  b parent class_ref 128386 // MachineLauncher
       end
 
-      classrelation 129410 // programMemory (<aggregation>)
-	relation 129026 o---
-	  a role_name "programMemory" multiplicity "1" private
-	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	    classrelation_ref 129410 // programMemory (<aggregation>)
-	  b role_name "" private
-	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
-"
-	    classrelation_ref 129538 // <aggregation>
-      end
-
       classrelation 129666 // <directional aggregation>
 	relation 129154 o-->
 	  a role_name "" private
@@ -455,24 +460,24 @@ ${members}}
 	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
 "
 	    classrelation_ref 143490 // <unidirectional association>
-	  b parent class_ref 128770 // Program
+	  b parent class_ref 128770 // MyProgram
       end
 
       classrelation 143618 // <dependency>
 	relation 142722 -_->
 	  a default
 	    classrelation_ref 143618 // <dependency>
-	  b parent class_ref 128770 // Program
+	  b parent class_ref 128770 // MyProgram
       end
 
       operation 136962 "Machine"
 	public explicit_return_type ""
 	nparams 5
-	  param in name "cpu" type class_ref 128002 // MyCPU1
-	  param in name "programMemory" type class_ref 128642 // Memory
+	  param in name "cpu" type class_ref 128002 // MyCPU
+	  param in name "programMemory" type class_ref 128642 // MyMemory
 	  param in name "expStack" type class_ref 128514 // Stack
 	  param in name "callStack" type class_ref 128514 // Stack
-	  param in name "ioSystem" type class_ref 128130 // IO
+	  param in name "ioSystem" type class_ref 128130 // MyIO
 	
 	java_def "  ${comment}${@}${visibility}${final}${synchronized}${name}${(}${t0} ${p0}, ${t1} ${p1}, ${t2} ${p2}, ${t3} ${p3}, ${t4} ${p4}${)}${throws} {
   ${body}}
@@ -489,6 +494,25 @@ ${members}}
 "
 	    classrelation_ref 145026 // cpu (<directional composition>)
 	  b parent class_ref 135682 // CPU
+      end
+
+      classrelation 152066 // programMemory (<aggregation>)
+	relation 150786 o---
+	  a role_name "programMemory" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 152066 // programMemory (<aggregation>)
+	  b role_name "" private
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 152194 // <aggregation>
+      end
+
+      classrelation 152578 // <dependency>
+	relation 151170 -_->
+	  a default
+	    classrelation_ref 152578 // <dependency>
+	  b parent class_ref 142466 // Program
       end
     end
 
@@ -563,7 +587,7 @@ ${members}}
       end
     end
 
-    class 128642 "Memory"
+    class 128642 "MyMemory"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -574,10 +598,6 @@ ${members}}
       idl_decl ""
       explicit_switch_type ""
       
-      classrelation 129538 // <aggregation>
-	relation_ref 129026 // <aggregation>
-      end
-
       operation 129538 "getStartAdress"
 	public explicit_return_type "int"
 	nparams 0
@@ -626,7 +646,7 @@ ${members}}
 	idl_decl ""
       end
 
-      operation 137346 "Memory"
+      operation 137346 "MyMemory"
 	public explicit_return_type ""
 	nparams 2
 	  param in name "i" explicit_type "int"
@@ -639,9 +659,17 @@ ${members}}
 	
 	
       end
+
+      classrelation 151810 // <realization>
+	relation 150530 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 151810 // <realization>
+	  b parent class_ref 142338 // Memory
+      end
     end
 
-    class 128770 "Program"
+    class 128770 "MyProgram"
       visibility package 
       cpp_decl ""
       java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
@@ -705,7 +733,7 @@ ${members}}
 	    classrelation_ref 143874 // <composition>
       end
 
-      operation 137090 "Program"
+      operation 137090 "MyProgram"
 	public explicit_return_type ""
 	nparams 1
 	  param in name "instructions" explicit_type "Instruction[]"
@@ -716,6 +744,21 @@ ${members}}
 	
 	
 	
+      end
+
+      classrelation 152322 // <dependency>
+	relation 150914 -_->
+	  a default
+	    classrelation_ref 152322 // <dependency>
+	  b parent class_ref 142466 // Program
+      end
+
+      classrelation 152450 // <realization>
+	relation 151042 -_-|>
+	  a public
+	    java "${type}"
+	    classrelation_ref 152450 // <realization>
+	  b parent class_ref 142466 // Program
       end
     end
 
@@ -854,7 +897,7 @@ ${members}};
       operation 138114 "WireToIoSubsystem"
 	abstract public explicit_return_type "void"
 	nparams 1
-	  param in name "ioSubsystem" type class_ref 128130 // IO
+	  param in name "ioSubsystem" type class_ref 128130 // MyIO
 	
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
   ${body}}
@@ -867,7 +910,7 @@ ${members}};
       operation 138242 "wireToProgrammemory"
 	abstract cpp_virtual public explicit_return_type "void"
 	nparams 1
-	  param in name "programMemory" type class_ref 128642 // Memory
+	  param in name "programMemory" type class_ref 128642 // MyMemory
 	
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
   ${body}}
@@ -893,6 +936,159 @@ ${members}};
 	abstract cpp_virtual public explicit_return_type "void"
 	nparams 1
 	  param in name "adress" explicit_type "int"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 142210 "IO"
+      visibility package stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl "${comment}interface ${name} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl "${comment}${abstract}${local}interface ${name}${inherit} {
+${members}};
+"
+      explicit_switch_type ""
+      
+      operation 145026 "displayRuntimeError"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "string" explicit_type "string"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145154 "displayProgramTermination"
+	public explicit_return_type "void"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145282 "read"
+	public explicit_return_type "int"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145410 "write"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "op" explicit_type "int"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+    end
+
+    class 142338 "Memory"
+      visibility package stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl "${comment}interface ${name} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl "${comment}${abstract}${local}interface ${name}${inherit} {
+${members}};
+"
+      explicit_switch_type ""
+      
+      operation 145538 "getStartAdress"
+	public explicit_return_type "int"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145666 "write"
+	public explicit_return_type "void"
+	nparams 2
+	  param in name "currentAdress" explicit_type "int"
+	  param in name "opCode" explicit_type "int"
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}, ${t1} ${p1}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      classrelation 152194 // <aggregation>
+	relation_ref 150786 // <aggregation>
+      end
+    end
+
+    class 142466 "Program"
+      visibility package stereotype "interface"
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}interface ${name}${extends} {
+${members}}
+"
+      php_decl "${comment}interface ${name} {
+${members}}
+"
+      python_2_2 python_decl ""
+      idl_decl "${comment}${abstract}${local}interface ${name}${inherit} {
+${members}};
+"
+      explicit_switch_type ""
+      
+      operation 145794 "getInstructionCount"
+	public explicit_return_type "int"
+	nparams 0
+	
+	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	
+      end
+
+      operation 145922 "getInstructionAt"
+	public return_type class_ref 128898 // Instruction
+	nparams 1
+	  param in name "instructionNumber" explicit_type "int"
 	
 	java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
   ${body}}

@@ -47,7 +47,7 @@ public class MachineLauncher
 						new Instruction(MyCPU.MUL, null),
 						new Instruction(MyCPU.RET, null)
 				};
-		Program program = new Program(instructions);
+		Program program = new MyProgram(instructions);
 		
 		Memory programMemory= null;
 		Stack expStack = null;
@@ -55,7 +55,7 @@ public class MachineLauncher
 
 		try
 		{
-			programMemory = new Memory(0x00000000, 0x00000020);
+			programMemory = new MyMemory(0x00000000, 0x00000020);
 			expStack = new Stack(16);
 			callStack = new Stack(16);
 		}
@@ -64,7 +64,7 @@ public class MachineLauncher
 			// Safely ignore this error, which is not one
 		}
 		
-		IO ioSystem = new IO(System.in, System.out, System.err);
+		IO ioSystem = new MyIO(System.in, System.out, System.err);
 		CPU cpu = new MyCPU();		
 		Machine machine = new Machine(cpu, programMemory, expStack, callStack, ioSystem );
 		try
